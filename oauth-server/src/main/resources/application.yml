@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+spring:
+  session:
+    store-type: none
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jdbc-url: jdbc:mysql://localhost:3306/mytestdb?serverTimezone=Asia/Shanghai
+    username: root
+    password:
+
+  application:
+    name: oauth2-new
+
