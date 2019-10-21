@@ -1,12 +1,18 @@
-package com.zlz.common.entity;
+package com.zlz.common.entity.user;
 
+
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 
 /**
  * @author zhulinzhong
  * @version 1.0 CreateTime:2019/10/18 17:56
  */
+@TableName("user")
 public class UserVO extends BaseEntity{
 
+    @TableId("id")
+    private Long id;
     /**
      * 用户名
      */
@@ -56,6 +62,14 @@ public class UserVO extends BaseEntity{
      * 是否是管理员
      */
     private Integer is_admin;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Integer getIs_admin() {
         return is_admin;

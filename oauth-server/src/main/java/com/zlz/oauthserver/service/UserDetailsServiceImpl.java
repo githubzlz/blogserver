@@ -1,10 +1,10 @@
 package com.zlz.oauthserver.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.zlz.common.entity.TbPermission;
-import com.zlz.common.entity.TbRolePermission;
-import com.zlz.common.entity.TbUser;
-import com.zlz.common.entity.TbUserRole;
+import com.zlz.common.entity.user.TbPermission;
+import com.zlz.common.entity.user.TbRolePermission;
+import com.zlz.common.entity.user.TbUser;
+import com.zlz.common.entity.user.TbUserRole;
 import com.zlz.oauthserver.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;

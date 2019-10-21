@@ -1,7 +1,8 @@
 package com.blog.userserver.controller;
 
-import com.blog.userserver.server.UserServer;
-import com.zlz.common.entity.UserVO;
+import com.blog.userserver.mapper.UserMapper;
+import com.blog.userserver.server.UserQueryServer;
+import com.zlz.common.entity.user.UserVO;
 import com.zlz.common.result.ResultSet;
 import com.zlz.common.util.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,19 +14,29 @@ import org.springframework.web.bind.annotation.*;
  * @version 1.0 CreateTime:2019/10/21 11:41
  */
 @RestController
-@RequestMapping("/info")
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
-    private UserServer userServer;
+    private UserQueryServer userServer;
 
-    @PostMapping("/user/{username}")
-    public ResultSet getUserInfo(@RequestBody PageInfo<UserVO> pageInfo, @PathVariable("username")String username){
-        return userServer.getUser(pageInfo, username);
+    @PostMapping("/userlist")
+    public ResultSet getUserList(@RequestBody PageInfo<UserVO> pageInfo){
+        return userServer.getUserList(pageInfo);
     }
 
-    @PostMapping("/admin/{username}")
-    public ResultSet getAdminInfo(@RequestBody PageInfo<UserVO> pageInfo, @PathVariable("username")String username){
-        return userServer.getAdmin(pageInfo, username);
+    @PostMapping("/adminlist")
+    public ResultSet getAdminList(@RequestBody PageInfo<UserVO> pageInfo){
+        return userServer.getAdminList(pageInfo);
+    }
+
+    @PostMapping("/userinfo")
+    public ResultSet getUserInfo(@RequestBody String username){
+        return userServer.getUserByName(username);
+    }
+
+    @PostMapping("/admininfo")
+    public ResultSet getDdminInfo(@RequestBody String username){
+        return userServer.getAdminByName(username);
     }
 }

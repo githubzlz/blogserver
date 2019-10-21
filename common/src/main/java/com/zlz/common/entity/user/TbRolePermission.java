@@ -1,4 +1,4 @@
-package com.zlz.common.entity;
+package com.zlz.common.entity.user;
 
 import java.io.Serializable;
 
