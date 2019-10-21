@@ -2,7 +2,7 @@ package com.blog.userserver.mapper;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.zlz.common.entity.user.UserVO;
+import com.blog.common.entity.user.UserVO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

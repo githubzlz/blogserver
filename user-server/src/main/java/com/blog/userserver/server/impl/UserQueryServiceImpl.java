@@ -2,14 +2,13 @@ package com.blog.userserver.server.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.blog.userserver.mapper.UserMapper;
 import com.blog.userserver.mapper.UserVoMapper;
 import com.blog.userserver.server.UserQueryServer;
-import com.zlz.common.constants.UserConstants;
-import com.zlz.common.entity.user.UserVO;
-import com.zlz.common.result.ResultSet;
-import com.zlz.common.util.PageInfo;
-import com.zlz.common.util.PageUtil;
+import com.blog.common.constants.UserConstants;
+import com.blog.common.entity.user.UserVO;
+import com.blog.common.result.ResultSet;
+import com.blog.common.util.PageInfo;
+import com.blog.common.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -95,7 +94,7 @@ public class UserQueryServiceImpl implements UserQueryServer {
             queryWrapper.eq(column, value);
         }
         if(column2 != null && value2 != null){
-           queryWrapper .eq(column2, value);
+           queryWrapper .eq(column2, value2);
         }
         UserVO userVO = userVoMapper.selectOne(queryWrapper);
         return entityReturn(userVO);

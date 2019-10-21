@@ -1,8 +1,8 @@
 package com.blog.userserver.server;
 
-import com.zlz.common.entity.user.UserVO;
-import com.zlz.common.result.ResultSet;
-import com.zlz.common.util.PageInfo;
+import com.blog.common.entity.user.UserVO;
+import com.blog.common.result.ResultSet;
+import com.blog.common.util.PageInfo;
 
 /**
  * 用户信息

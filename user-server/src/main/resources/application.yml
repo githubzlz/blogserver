@@ -1,0 +1,36 @@
+server:
+  port: 10020
+
+  servlet:
+    context-path: /user
+spring:
+  application:
+    name: user
+  datasource:
+    dynamic:
+      datasource:
+        mytestdb:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://localhost:3306/mytestdb?serverTimezone=Asia/Shanghai
+          username: root
+          password:
+        user:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://localhost:3306/user?serverTimezone=Asia/Shanghai
+          username: root
+          password:
+      primary: user
+
+# http://localhost:8080/oauth/authorize?client_id=user&response_type=code
+
+security:
+  oauth2:
+    client:
+      client-id: user
+      client-secret: secret
+      access-token-uri: http://localhost:8080/oauth/token
+      user-authorization-uri: http://localhost:8080/oauth/authorize
+    resource:
+      user-info-uri:
+      jwt:
+        key-uri: http://localhost:8080/oauth/token_key
