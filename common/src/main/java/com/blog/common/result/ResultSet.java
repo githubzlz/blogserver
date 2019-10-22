@@ -75,6 +75,10 @@ public class ResultSet {
         return new ResultSet(ResultCodeConstants.OUT_ERROR_MSG, ResultCodeConstants.OUT_ERROR);
     }
 
+    public static ResultSet executeError(){
+        return new ResultSet(ResultCodeConstants.OUT_ERROR_MSG, ResultCodeConstants.OUT_ERROR);
+    }
+
     public String getMessage() {
         return message;
     }

@@ -12,5 +12,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 @DS("mytestdb")
 @Mapper
-public interface UserMapper extends BaseMapper<TbUser> {
+public interface UserMapper extends BaseMapper<TbUser>{
+
 }

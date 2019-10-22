@@ -1,47 +1,58 @@
 package com.blog.userserver.controller;
 
-import com.blog.userserver.server.UserQueryServer;
+import com.blog.userserver.server.UserQueryService;
 import com.blog.common.entity.user.UserVO;
 import com.blog.common.result.ResultSet;
-import com.blog.common.util.PageInfo;
+import com.blog.common.result.PageInfo;
 import com.blog.userserver.util.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 用户信息操作controller层
+ * 查询用户信息操作controller层
  * @author zhulinzhong
  * @version 1.0 CreateTime:2019/10/21 11:41
  */
 @RestController
-public class UserController {
+@RequestMapping("/query")
+public class UserQueryController {
 
     @Autowired
-    private UserQueryServer userServer;
+    private UserQueryService userServer;
 
-    @GetMapping("/getLoginUser")
+    @GetMapping("/get_login_user")
     public String test(HttpServletRequest request){
         return LoginUser.getLoginUser(request);
     }
 
-    @PostMapping("/userlist")
+    @PostMapping("/user_page")
     public ResultSet getUserList(@RequestBody PageInfo<UserVO> pageInfo){
         return userServer.getUserList(pageInfo);
     }
 
-    @PostMapping("/adminlist")
+    @PostMapping("/admin_page")
     public ResultSet getAdminList(@RequestBody PageInfo<UserVO> pageInfo){
         return userServer.getAdminList(pageInfo);
     }
 
-    @PostMapping("/userinfo")
+    @PostMapping("/user_info_id")
     public ResultSet getUserInfo(@RequestBody UserVO userVO){
-        return userServer.getUserByName(userVO.getUsername());
+        return userServer.getUserById(userVO);
     }
 
-    @PostMapping("/admininfo")
+    @PostMapping("/admin_info_id")
     public ResultSet getAdminInfo(@RequestBody UserVO userVO){
-        return userServer.getAdminByName(userVO.getUsername());
+        return userServer.getAdminById(userVO);
+    }
+
+    @PostMapping("/user_list_username")
+    public ResultSet getUserList(@RequestBody UserVO userVO){
+        return userServer.getUserByUserName(userVO);
+    }
+
+    @PostMapping("/admin_list_username")
+    public ResultSet getAdminList(@RequestBody UserVO userVO){
+        return userServer.getAdminByUserName(userVO);
     }
 }

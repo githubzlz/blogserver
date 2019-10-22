@@ -20,10 +20,10 @@ public class ResultCodeConstants {
      * 失败，输入异常
      */
     public static final Integer INPUT_ERROR = -2;
-    public static final String INPUT_ERROR_MSG = "操作失败，请输入正确的值";
+    public static final String INPUT_ERROR_MSG = "查询失败，请输入正确的值";
     /**
      * 失败，返回异常
      */
     public static final Integer OUT_ERROR = -3;
-    public static final String OUT_ERROR_MSG = "操作失败，请重新尝试";
+    public static final String OUT_ERROR_MSG = "查询失败，请重新尝试";
 }

@@ -2,22 +2,26 @@ package com.blog.userserver.server.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.blog.common.result.ResultList;
 import com.blog.userserver.mapper.UserVoMapper;
-import com.blog.userserver.server.UserQueryServer;
+import com.blog.userserver.server.UserQueryService;
 import com.blog.common.constants.UserConstants;
 import com.blog.common.entity.user.UserVO;
 import com.blog.common.result.ResultSet;
-import com.blog.common.util.PageInfo;
+import com.blog.common.result.PageInfo;
 import com.blog.common.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
+ * 查询用户信息
  * @author zhulinzhong
  * @version 1.0 CreateTime:2019/10/21 9:57
  */
 @Service
-public class UserQueryServiceImpl implements UserQueryServer {
+public class UserQueryServiceImpl implements UserQueryService {
 
     @Autowired
     private UserVoMapper userVoMapper;
@@ -33,13 +37,48 @@ public class UserQueryServiceImpl implements UserQueryServer {
     }
 
     @Override
-    public ResultSet getUserByName(String username) {
-        return userReturn("username", username,"is_admin", UserConstants.IS_NOT_ADMIN);
+    public ResultSet getUserById(UserVO userVO) {
+        if(userVO == null || userVO.getId() == null){
+            return ResultSet.inputError();
+        }
+        return userReturn("id", userVO.getId(),"is_admin", UserConstants.IS_NOT_ADMIN);
     }
 
     @Override
-    public ResultSet getAdminByName(String username) {
-        return userReturn("username", username, "is_admin", UserConstants.IS_ADMIN);
+    public ResultSet getAdminById(UserVO userVO) {
+        if(userVO == null || userVO.getId() == null){
+            return ResultSet.inputError();
+        }
+        return userReturn("id", userVO.getId(), "is_admin", UserConstants.IS_ADMIN);
+    }
+
+    @Override
+    public ResultSet getUserByUserName(UserVO userVO) {
+        if(userVO == null || userVO.getUsername() == null){
+            return ResultSet.inputError();
+        }
+        return userListReturn("username", userVO.getUsername(),
+                "is_admin", UserConstants.IS_NOT_ADMIN);
+    }
+
+    @Override
+    public ResultSet getAdminByUserName(UserVO userVO) {
+        if(userVO == null || userVO.getUsername() == null){
+            return ResultSet.inputError();
+        }
+        return userListReturn("username", userVO.getUsername(),
+                "is_admin", UserConstants.IS_ADMIN);
+    }
+
+    @Override
+    public UserVO getUserInfoByName(String username) {
+        ResultSet resultSet = userReturn("username",username,null, null);
+
+        if(resultSet.getEntity() == null){
+            return null;
+        }
+        UserVO userVO = (UserVO) resultSet.getEntity();
+        return userVO;
     }
 
     /**
@@ -86,16 +125,10 @@ public class UserQueryServiceImpl implements UserQueryServer {
      * @param value2 值2
      * @return ResultSet
      */
-    private ResultSet userReturn(String column, String value, String column2, Object value2){
+    private ResultSet userReturn(String column, Object value, String column2, Object value2){
 
         //根据两个字段查询用户信息
-        QueryWrapper<UserVO> queryWrapper = new QueryWrapper<>();
-        if(column != null && value != null){
-            queryWrapper.eq(column, value);
-        }
-        if(column2 != null && value2 != null){
-           queryWrapper .eq(column2, value2);
-        }
+        QueryWrapper<UserVO> queryWrapper = getQueryWrapper(column, value, column2, value2);
         UserVO userVO = userVoMapper.selectOne(queryWrapper);
         return entityReturn(userVO);
     }
@@ -110,5 +143,52 @@ public class UserQueryServiceImpl implements UserQueryServer {
             return ResultSet.outError();
         }
         return ResultSet.success(entity);
+    }
+
+    /**
+     * 返回集合信息的方法
+     * @param list 集合
+     * @return ResultSet
+     */
+    private ResultSet listReturn(List<UserVO> list){
+        if(list.isEmpty()){
+            return  ResultSet.outError();
+        }
+        return ResultSet.success(ResultList.getList(list));
+    }
+
+    /**
+     * 根据两个字段查询用户信息
+     * @param column 字段1
+     * @param value 值1
+     * @param column2 字段2
+     * @param value2 值2
+     * @return ResultSet
+     */
+    private ResultSet userListReturn(String column, Object value, String column2, Object value2){
+
+        //根据两个字段查询用户信息
+        QueryWrapper<UserVO> queryWrapper = getQueryWrapper(column, value, column2, value2);
+        List<UserVO> list = userVoMapper.selectList(queryWrapper);
+        return listReturn(list);
+    }
+
+    /**
+     * 设置QueryWrapper
+     * @param column 字段1
+     * @param value 值1
+     * @param column2 字段2
+     * @param value2 值2
+     * @return QueryWrapper
+     */
+    private QueryWrapper<UserVO> getQueryWrapper(String column, Object value, String column2, Object value2) {
+        QueryWrapper<UserVO> queryWrapper = new QueryWrapper<>();
+        if(column != null && value != null){
+            queryWrapper.eq(column, value);
+        }
+        if(column2 != null && value2 != null){
+            queryWrapper .eq(column2, value2);
+        }
+        return  queryWrapper;
     }
 }

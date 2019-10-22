@@ -2,6 +2,7 @@ package com.blog.common.util;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.blog.common.result.PageInfo;
 
 /**
  * @author zhulinzhong

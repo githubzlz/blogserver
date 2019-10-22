@@ -3,6 +3,10 @@ server:
 
   servlet:
     context-path: /user
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
 spring:
   application:
     name: user
@@ -26,6 +30,8 @@ spring:
 security:
   oauth2:
     client:
+
+# .properties文件client-id错误
       client-id: user
       client-secret: secret
       access-token-uri: http://localhost:8080/oauth/token

@@ -1,5 +1,7 @@
 package com.blog.common.entity.user;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,6 +9,7 @@ import java.util.Date;
  * 用户信息
  * @author zhulinzhong
  */
+@TableName("tb_user")
 public class TbUser implements Serializable {
     private Long id;
 

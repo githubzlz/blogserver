@@ -1,4 +1,4 @@
-package com.blog.common.util;
+package com.blog.common.result;
 
 import java.util.List;
 

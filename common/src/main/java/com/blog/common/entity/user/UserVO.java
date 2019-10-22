@@ -1,6 +1,7 @@
 package com.blog.common.entity.user;
 
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -11,7 +12,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 @TableName("user")
 public class UserVO extends BaseEntity{
 
-    @TableId("id")
+    @TableId(value = "id", type = IdType.ID_WORKER)
     private Long id;
     /**
      * 用户名
@@ -149,5 +150,22 @@ public class UserVO extends BaseEntity{
 
     public void setIsBanned(Integer isBanned) {
         this.isBanned = isBanned;
+    }
+
+    @Override
+    public String toString() {
+        return "UserVO{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", gender=" + gender +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", address='" + address + '\'' +
+                ", note='" + note + '\'' +
+                ", isDeleted=" + isDeleted +
+                ", isBanned=" + isBanned +
+                ", isAdmin=" + isAdmin +
+                '}';
     }
 }
