@@ -1,6 +1,8 @@
 package com.blog.userserver.server;
 
 import com.blog.common.entity.user.UserVO;
+import com.blog.common.exception.ConfInputException;
+import com.blog.common.exception.ConfOutputException;
 import com.blog.common.result.ResultSet;
 import com.blog.common.result.PageInfo;
 
@@ -16,47 +18,32 @@ public interface UserQueryService {
      * @param pageInfo pageInfo
      * @return list
      */
-    ResultSet getUserList(PageInfo<UserVO> pageInfo);
-
-    /**
-     * 获取管理员信息列表
-     * @param pageInfo pageInfo
-     * @return list
-     */
-    ResultSet getAdminList(PageInfo<UserVO> pageInfo);
+    ResultSet getUserPage(PageInfo<UserVO> pageInfo,Integer isAdmin)
+            throws ConfInputException, ConfOutputException;
 
     /**
      * 通过用户id获取用户信息
      * @param userVO id
      * @return userVO
      */
-    ResultSet getUserById(UserVO userVO);
-
-    /**
-     * 通过用户id获取用户信息
-     * @param userVO id
-     * @return userVO
-     */
-    ResultSet getAdminById(UserVO userVO);
+    ResultSet getUserById(UserVO userVO,Integer isAdmin)
+            throws ConfInputException, ConfOutputException;
 
     /**
      * 通过用户名获取用户信息
      * @param userVO username
      * @return list
      */
-    ResultSet getUserByUserName(UserVO userVO);
+    ResultSet getUserByUserName(UserVO userVO,Integer isAdmin)
+            throws ConfInputException, ConfOutputException;
 
     /**
      * 通过用户名获取用户信息
-     * @param userVO username
-     * @return list
+     * @param column 字段
+     * @param value 值
+     * @param column2 字段
+     * @param value2 值
+     * @return UserVO
      */
-    ResultSet getAdminByUserName(UserVO userVO);
-
-    /**
-     * 通过用户名获取用户信息
-     * @param username
-     * @return
-     */
-    UserVO getUserInfoByName(String username);
+    UserVO getUserInfo(String column,Object value, String column2, Object value2);
 }

@@ -2,6 +2,8 @@ package com.blog.userserver.controller;
 
 import com.blog.common.constants.UserConstants;
 import com.blog.common.entity.user.UserVO;
+import com.blog.common.exception.CreateConfException;
+import com.blog.common.exception.SysExecuteException;
 import com.blog.common.result.ResultSet;
 import com.blog.userserver.server.UserCreateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +26,17 @@ public class UserCreateController {
     private UserCreateService userService;
 
     @PostMapping("/user")
-    public ResultSet createUser(@RequestBody UserVO userVO, HttpServletRequest request){
+    public ResultSet createUser(@RequestBody UserVO userVO)
+            throws CreateConfException, SysExecuteException {
         userVO.setIsAdmin(UserConstants.IS_NOT_ADMIN);
-        return userService.createUser(userVO, request);
+        return userService.createUser(userVO);
     }
 
     @PostMapping("/admin")
-    public ResultSet createAdmin(@RequestBody UserVO userVO, HttpServletRequest request){
+    public ResultSet createAdmin(@RequestBody UserVO userVO)
+            throws CreateConfException, SysExecuteException{
         userVO.setIsAdmin(UserConstants.IS_ADMIN);
-        return userService.createUser(userVO, request);
+        return userService.createUser(userVO);
     }
 
 }

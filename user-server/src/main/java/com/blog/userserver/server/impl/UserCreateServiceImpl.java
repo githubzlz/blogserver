@@ -3,17 +3,18 @@ package com.blog.userserver.server.impl;
 import com.baomidou.dynamic.datasource.annotation.DS;
 import com.blog.common.entity.user.TbUser;
 import com.blog.common.entity.user.UserVO;
+import com.blog.common.exception.CreateConfException;
+import com.blog.common.exception.SysExecuteException;
 import com.blog.common.result.ResultSet;
+import com.blog.common.util.CommonUtil;
 import com.blog.userserver.mapper.UserMapper;
 import com.blog.userserver.mapper.UserVoMapper;
 import com.blog.userserver.server.UserCreateService;
 import com.blog.userserver.server.UserQueryService;
-import com.blog.userserver.util.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /**
@@ -34,15 +35,15 @@ public class UserCreateServiceImpl implements UserCreateService {
     private UserQueryService userQueryService;
 
     @Override
-    public ResultSet createUser(UserVO userVO, HttpServletRequest request) {
-        if(userVO == null || userVO.getUsername() == null || userVO.getPassword() == null){
-            return ResultSet.inputError();
-        }
+    public ResultSet createUser(UserVO userVO) throws CreateConfException, SysExecuteException {
+
+        CommonUtil.inputNotNullCheck(userVO, userVO.getUsername(),userVO.getPassword());
 
         //通过同户名查找数据库
-        UserVO result = userQueryService.getUserInfoByName(userVO.getUsername());
+        UserVO result = userQueryService
+                .getUserInfo("username", userVO.getUsername(), null, null);
         if(result != null){
-            return ResultSet.inputError();
+            throw new CreateConfException("重复的用户名");
         }
 
         //补全数据
@@ -55,12 +56,12 @@ public class UserCreateServiceImpl implements UserCreateService {
         int row1 = createTbUser(userVO, password);
 
         if(row1 != 1){
-            return ResultSet.sysError();
+            throw new SysExecuteException("创建失败，系统错误");
         }
 
         int row2 = userVoMapper.insert(userVO);
         if(row2 != 1){
-            return ResultSet.sysError();
+            throw new SysExecuteException("创建失败，系统错误");
         }
         return ResultSet.success();
     }

@@ -1,19 +1,19 @@
 package com.blog.userserver.server.impl;
 
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.blog.common.result.ResultList;
+import com.blog.common.entity.user.UserVO;
+import com.blog.common.exception.ConfInputException;
+import com.blog.common.exception.ConfOutputException;
+import com.blog.common.result.PageInfo;
+import com.blog.common.result.ResultSet;
+import com.blog.common.util.CommonUtil;
+import com.blog.common.util.PageUtil;
 import com.blog.userserver.mapper.UserVoMapper;
 import com.blog.userserver.server.UserQueryService;
-import com.blog.common.constants.UserConstants;
-import com.blog.common.entity.user.UserVO;
-import com.blog.common.result.ResultSet;
-import com.blog.common.result.PageInfo;
-import com.blog.common.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * 查询用户信息
@@ -27,159 +27,88 @@ public class UserQueryServiceImpl implements UserQueryService {
     private UserVoMapper userVoMapper;
 
     @Override
-    public ResultSet getUserList(PageInfo<UserVO> pageInfo) {
-        return userPageReturn(pageInfo, "is_admin", UserConstants.IS_NOT_ADMIN);
-    }
+    public ResultSet getUserPage(PageInfo<UserVO> pageInfo,Integer isAdmin)
+            throws ConfInputException, ConfOutputException {
 
-    @Override
-    public ResultSet getAdminList(PageInfo<UserVO> pageInfo) {
-        return userPageReturn(pageInfo, "is_admin", UserConstants.IS_ADMIN);
-    }
+        CommonUtil.inputNotNullCheck(pageInfo,pageInfo.getPageNum(),pageInfo.getPageSize());
 
-    @Override
-    public ResultSet getUserById(UserVO userVO) {
-        if(userVO == null || userVO.getId() == null){
-            return ResultSet.inputError();
+        if(isAdmin == null){
+            pageInfo = getUserPage(pageInfo, null, null);
         }
-        return userReturn("id", userVO.getId(),"is_admin", UserConstants.IS_NOT_ADMIN);
+        pageInfo = getUserPage(pageInfo,"is_admin",isAdmin);
+
+        CommonUtil.outputNotNullCheck(pageInfo);
+
+        return ResultSet.success(pageInfo);
     }
 
     @Override
-    public ResultSet getAdminById(UserVO userVO) {
-        if(userVO == null || userVO.getId() == null){
-            return ResultSet.inputError();
+    public ResultSet getUserById(UserVO userVO,Integer isAdmin)
+            throws ConfInputException, ConfOutputException {
+
+        CommonUtil.inputNotNullCheck(userVO, userVO.getId());
+
+        if(isAdmin != null){
+            userVO = getUserInfo("id", userVO.getId(), "is_admin", isAdmin);
         }
-        return userReturn("id", userVO.getId(), "is_admin", UserConstants.IS_ADMIN);
+        userVO = getUserInfo("id", userVO.getId(), null, null);
+
+        CommonUtil.outputNotNullCheck(userVO);
+
+        return ResultSet.success(userVO);
     }
 
     @Override
-    public ResultSet getUserByUserName(UserVO userVO) {
-        if(userVO == null || userVO.getUsername() == null){
-            return ResultSet.inputError();
+    public ResultSet getUserByUserName(UserVO userVO,Integer isAdmin)
+            throws ConfInputException, ConfOutputException {
+
+        CommonUtil.inputNotNullCheck(userVO, userVO.getUsername());
+
+        if(isAdmin != null){
+            userVO = getUserInfo("username", userVO.getUsername(), "is_admin", isAdmin);
         }
-        return userListReturn("username", userVO.getUsername(),
-                "is_admin", UserConstants.IS_NOT_ADMIN);
+        userVO = getUserInfo("username", userVO.getUsername(), null, null);
+
+        CommonUtil.outputNotNullCheck(userVO);
+
+        return ResultSet.success(userVO);
     }
 
     @Override
-    public ResultSet getAdminByUserName(UserVO userVO) {
-        if(userVO == null || userVO.getUsername() == null){
-            return ResultSet.inputError();
-        }
-        return userListReturn("username", userVO.getUsername(),
-                "is_admin", UserConstants.IS_ADMIN);
-    }
-
-    @Override
-    public UserVO getUserInfoByName(String username) {
-        ResultSet resultSet = userReturn("username",username,null, null);
-
-        if(resultSet.getEntity() == null){
-            return null;
-        }
-        UserVO userVO = (UserVO) resultSet.getEntity();
+    public UserVO getUserInfo(String column,Object value, String column2, Object value2) {
+        //根据两个字段查询用户信息
+        QueryWrapper<UserVO> queryWrapper = getQueryWrapper(column, value, column2, value2);
+        UserVO userVO = userVoMapper.selectOne(queryWrapper);
         return userVO;
     }
 
     /**
-     * 根据输入的信息查寻用户信息的方法
-     * @param pageInfo pageInfo
-     * @param column 字段
-     * @param value 字段值
-     * @return ResultSet
+     * 分页查询数据
+     * @param pageInfo
+     * @param column
+     * @param value
+     * @return
      */
-    private ResultSet userPageReturn(PageInfo pageInfo, String column, Object value){
-
-        //数据验证
-        if(pageInfo == null || pageInfo.getPageNum() == null || pageInfo.getPageSize() == null){
-            return ResultSet.inputError();
-        }
+    private PageInfo<UserVO> getUserPage(PageInfo pageInfo, String column, Object value){
 
         //根据用户名和另一个字段查询用户信息
         QueryWrapper<UserVO> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(column, value);
+        if(column != null){
+            queryWrapper.eq(column, value);
+        }
         IPage<UserVO> iPage = userVoMapper.selectPage(PageUtil.getIpage(pageInfo),queryWrapper);
 
         //返回分页信息
-        return pageReturn(iPage, pageInfo);
+        return PageUtil.getPageInfo(iPage, pageInfo);
     }
 
     /**
-     * 返回分页信息的方法
-     * @param iPage iPage
-     * @param pageInfo pageInfo
-     * @return ResultSet
-     */
-    private ResultSet pageReturn(IPage iPage, PageInfo pageInfo){
-        if(iPage.getRecords().isEmpty()){
-            return  ResultSet.outError();
-        }
-        return ResultSet.success(PageUtil.getPageInfo(iPage, pageInfo));
-    }
-
-    /**
-     * 根据两个字段查询用户信息
-     * @param column 字段1
-     * @param value 值1
-     * @param column2 字段2
-     * @param value2 值2
-     * @return ResultSet
-     */
-    private ResultSet userReturn(String column, Object value, String column2, Object value2){
-
-        //根据两个字段查询用户信息
-        QueryWrapper<UserVO> queryWrapper = getQueryWrapper(column, value, column2, value2);
-        UserVO userVO = userVoMapper.selectOne(queryWrapper);
-        return entityReturn(userVO);
-    }
-
-    /**
-     * 返回实体信息的方法
-     * @param entity 实体
-     * @return ResultSet
-     */
-    private ResultSet entityReturn(Object entity){
-        if(entity == null){
-            return ResultSet.outError();
-        }
-        return ResultSet.success(entity);
-    }
-
-    /**
-     * 返回集合信息的方法
-     * @param list 集合
-     * @return ResultSet
-     */
-    private ResultSet listReturn(List<UserVO> list){
-        if(list.isEmpty()){
-            return  ResultSet.outError();
-        }
-        return ResultSet.success(ResultList.getList(list));
-    }
-
-    /**
-     * 根据两个字段查询用户信息
-     * @param column 字段1
-     * @param value 值1
-     * @param column2 字段2
-     * @param value2 值2
-     * @return ResultSet
-     */
-    private ResultSet userListReturn(String column, Object value, String column2, Object value2){
-
-        //根据两个字段查询用户信息
-        QueryWrapper<UserVO> queryWrapper = getQueryWrapper(column, value, column2, value2);
-        List<UserVO> list = userVoMapper.selectList(queryWrapper);
-        return listReturn(list);
-    }
-
-    /**
-     * 设置QueryWrapper
-     * @param column 字段1
-     * @param value 值1
-     * @param column2 字段2
-     * @param value2 值2
-     * @return QueryWrapper
+     * 创建queryWrapper条件
+     * @param column
+     * @param value
+     * @param column2
+     * @param value2
+     * @return
      */
     private QueryWrapper<UserVO> getQueryWrapper(String column, Object value, String column2, Object value2) {
         QueryWrapper<UserVO> queryWrapper = new QueryWrapper<>();
@@ -191,4 +120,5 @@ public class UserQueryServiceImpl implements UserQueryService {
         }
         return  queryWrapper;
     }
+
 }

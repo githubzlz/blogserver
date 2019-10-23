@@ -2,9 +2,13 @@ package com.blog.userserver.server.impl;
 
 import com.blog.common.entity.user.TbUser;
 import com.blog.common.entity.user.UserVO;
+import com.blog.common.exception.CreateConfException;
+import com.blog.common.exception.UpdateConfException;
 import com.blog.common.result.ResultSet;
+import com.blog.common.util.CommonUtil;
 import com.blog.userserver.mapper.UserMapper;
 import com.blog.userserver.mapper.UserVoMapper;
+import com.blog.userserver.server.UserQueryService;
 import com.blog.userserver.server.UserUpdateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -28,14 +32,34 @@ public class UserUpdateServiceImpl implements UserUpdateService {
     private UserMapper userMapper;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private UserQueryService userQueryService;
 
     @Override
     public ResultSet updateUserInfoById(UserVO userVO) {
-        if(userVO == null || userVO.getId() == null){
-            return ResultSet.inputError();
-        }
+
+        CommonUtil.inputNotNullCheck(userVO);
+
         //若是修改密码，或者用户名则需要需改TbUser
+        updateTbUser(userVO);
+
+        int row = userVoMapper.updateById(userVO);
+        if(row != 1){
+            throw new UpdateConfException("修改错误，未完成修改");
+        }
+        return ResultSet.success();
+    }
+
+    public void updateTbUser(UserVO userVO) {
         if(userVO.getUsername() != null){
+
+            UserVO result = userQueryService
+                    .getUserInfo("username", userVO.getUsername(), null, null);
+
+            if(result != null){
+                throw new UpdateConfException("重复的用户名");
+            }
+
             TbUser user = new TbUser();
             user.setId(userVO.getId());
             user.setUsername(userVO.getUsername());
@@ -47,14 +71,9 @@ public class UserUpdateServiceImpl implements UserUpdateService {
             }
             int row = userMapper.updateById(user);
             if(row != 1){
-                return ResultSet.sysError();
+                throw new UpdateConfException("修改错误，未完成修改");
             }
         }
-
-        int row = userVoMapper.updateById(userVO);
-        if(row != 1){
-            return ResultSet.sysError();
-        }
-        return ResultSet.success();
     }
+
 }

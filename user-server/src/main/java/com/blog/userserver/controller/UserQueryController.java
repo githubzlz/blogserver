@@ -1,13 +1,12 @@
 package com.blog.userserver.controller;
 
+import com.blog.common.constants.UserConstants;
 import com.blog.userserver.server.UserQueryService;
 import com.blog.common.entity.user.UserVO;
 import com.blog.common.result.ResultSet;
 import com.blog.common.result.PageInfo;
-import com.blog.userserver.util.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 查询用户信息操作controller层
@@ -21,38 +20,93 @@ public class UserQueryController {
     @Autowired
     private UserQueryService userServer;
 
-    @GetMapping("/get_login_user")
-    public String test(HttpServletRequest request){
-        return LoginUser.getLoginUser(request);
+    /**
+     * 普通用户查询
+     * @param pageInfo
+     * @return
+     */
+    @PostMapping("/public_user_page")
+    public ResultSet getPublicUserPage(@RequestBody PageInfo<UserVO> pageInfo){
+        return userServer.getUserPage(pageInfo, UserConstants.IS_NOT_ADMIN);
     }
 
-    @PostMapping("/user_page")
-    public ResultSet getUserList(@RequestBody PageInfo<UserVO> pageInfo){
-        return userServer.getUserList(pageInfo);
+    /**
+     * 所有用户查询
+     * @param pageInfo
+     * @return
+     */
+    @PostMapping("/all_user_page")
+    public ResultSet getAllUserPage(@RequestBody PageInfo<UserVO> pageInfo){
+        return userServer.getUserPage(pageInfo, null);
     }
 
+    /**
+     * 管理员查询
+     * @param pageInfo
+     * @return
+     */
     @PostMapping("/admin_page")
-    public ResultSet getAdminList(@RequestBody PageInfo<UserVO> pageInfo){
-        return userServer.getAdminList(pageInfo);
+    public ResultSet getAdminPage(@RequestBody PageInfo<UserVO> pageInfo){
+        return userServer.getUserPage(pageInfo, UserConstants.IS_ADMIN);
     }
 
-    @PostMapping("/user_info_id")
+    /**
+     * 普通用户查询
+     * @param userVO
+     * @return
+     */
+    @PostMapping("/public_user_info_id")
     public ResultSet getUserInfo(@RequestBody UserVO userVO){
-        return userServer.getUserById(userVO);
+        return userServer.getUserById(userVO, UserConstants.IS_NOT_ADMIN);
     }
 
+    /**
+     * 所有用户查询
+     * @param userVO
+     * @return
+     */
+    @PostMapping("/all_user_info_id")
+    public ResultSet getAllUserInfo(@RequestBody UserVO userVO){
+        return userServer.getUserById(userVO, null);
+    }
+
+    /**
+     * 管理员查询
+     * @param userVO
+     * @return
+     */
     @PostMapping("/admin_info_id")
-    public ResultSet getAdminInfo(@RequestBody UserVO userVO){
-        return userServer.getAdminById(userVO);
+    public ResultSet getAdminInfo(@RequestBody UserVO userVO) {
+        return userServer.getUserById(userVO, UserConstants.IS_ADMIN);
     }
 
-    @PostMapping("/user_list_username")
+    /**
+     * 普通用户查询
+     * @param userVO
+     * @return
+     */
+    @PostMapping("/public_user_info_username")
     public ResultSet getUserList(@RequestBody UserVO userVO){
-        return userServer.getUserByUserName(userVO);
+        return userServer.getUserByUserName(userVO, UserConstants.IS_NOT_ADMIN);
     }
 
-    @PostMapping("/admin_list_username")
+    /**
+     * 所有用户查询
+     * @param userVO
+     * @return
+     */
+    @PostMapping("/all_user_info_username")
+    public ResultSet getAllUserList(@RequestBody UserVO userVO){
+        return userServer.getUserByUserName(userVO, null);
+    }
+
+    /**
+     * 管理员查询
+     * @param userVO
+     * @return
+     */
+    @PostMapping("/admin_info_username")
     public ResultSet getAdminList(@RequestBody UserVO userVO){
-        return userServer.getAdminByUserName(userVO);
+        return userServer.getUserByUserName(userVO, UserConstants.IS_ADMIN);
     }
 }
