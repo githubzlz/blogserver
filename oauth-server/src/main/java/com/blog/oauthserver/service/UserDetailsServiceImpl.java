@@ -44,7 +44,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         query2.eq("user_id", user.getId());
         List<TbUserRole> tbUserRoles = tbUserRoleMapper.selectList(query2);
         List<Long> roles = new ArrayList<>();
-        for(TbUserRole role : tbUserRoles){
+        for (TbUserRole role : tbUserRoles) {
             roles.add(role.getRoleId());
         }
         QueryWrapper query3 = new QueryWrapper();
@@ -52,7 +52,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<TbRolePermission> tbRolePermissions = tbRolePermissionMapper.selectList(query3);
 
         List<Long> permissions = new ArrayList<>();
-        for(TbRolePermission tbRolePermission: tbRolePermissions){
+        for (TbRolePermission tbRolePermission : tbRolePermissions) {
             permissions.add(tbRolePermission.getPermissionId());
         }
         QueryWrapper query4 = new QueryWrapper();
@@ -61,12 +61,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
-        System.err.println("UserName: "+user.getUsername());
-        System.err.println("Password: "+user.getPassword());
-        for (TbPermission tbPermission:tbPermissions){
+        System.err.println("UserName: " + user.getUsername());
+        System.err.println("Password: " + user.getPassword());
+        for (TbPermission tbPermission : tbPermissions) {
             GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(tbPermission.getEnname());
             grantedAuthorities.add(grantedAuthority);
-            System.err.println("ROLE: "+tbPermission.getName());
+            System.err.println("ROLE: " + tbPermission.getName());
         }
         return new User(user.getUsername(), user.getPassword(), grantedAuthorities);
     }

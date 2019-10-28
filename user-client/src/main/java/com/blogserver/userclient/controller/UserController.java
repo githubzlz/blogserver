@@ -1,8 +1,9 @@
 package com.blogserver.userclient.controller;
 
+import com.blog.common.constants.TokenConstants;
 import com.blog.common.result.PageInfo;
+import com.blog.common.util.TokenUtil;
 import com.blogserver.userclient.feign.UserFeignService;
-import com.blogserver.userclient.token.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +29,9 @@ public class UserController {
         PageInfo pageInfo = new PageInfo();
         pageInfo.setPageSize(10L);
         pageInfo.setPageNum(1L);
-        String token = TokenUtil.getToken(request).getToken();
+        String token = TokenUtil.getToken(request, TokenConstants.TOKEN_USER);
+
+        System.out.println("正在使用token访问api："+token);
         return userFeignService.getUserList(pageInfo, token);
     }
 }

@@ -1,6 +1,8 @@
 package com.blogserver.userclient.token;
 
-import com.blog.common.entity.token.Token;
+import com.blog.common.constants.BaseConstants;
+import com.blog.common.constants.TokenConstants;
+import com.blog.common.util.TokenUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -30,7 +32,8 @@ public class TokenController {
      */
     @GetMapping("/user_login")
     public void getCode(HttpServletResponse response) throws IOException {
-        response.sendRedirect("http://localhost:8080/oauth/authorize?client_id=user&response_type=code");
+        System.out.println("即将去获取code--------");
+        response.sendRedirect("http://"+BaseConstants.MYWEB_HOST+":8080/oauth/authorize?client_id=user&response_type=code");
     }
 
     /**
@@ -46,27 +49,30 @@ public class TokenController {
         StringBuffer params = new StringBuffer();
         params.append("?grant_type=authorization_code").append("&");
         params.append("code=").append(code);
-        HttpPost post = new HttpPost("http://user:secret@localhost:8080/oauth/token"+params);
+        HttpPost post = new HttpPost("http://user:secret@"+ BaseConstants.MYWEB_HOST +":8080/oauth/token"+params);
+
+        System.out.println("获取code成功，code："+code);
 
         CloseableHttpResponse cResponse = null;
+
+        System.out.println("正在请求token--------");
+
         cResponse = httpClient.execute(post);
         HttpEntity responseEntity = cResponse.getEntity();
         ObjectMapper objectMapper = new ObjectMapper();
         Map map = objectMapper.readValue(EntityUtils.toString(responseEntity), Map.class);
         String token = map.get("access_token").toString();
         String overTime = map.get("expires_in").toString();
-        Token tokenEntity = new Token();
-        tokenEntity.setToken("Bearer " +token);
-        tokenEntity.setOverTime(overTime);
 
-        //将token储存到session中保存用户的登陆状态
-        HttpSession session = request.getSession();
-        session.setAttribute("login_token", tokenEntity);
-        String requestUrl = (String) session.getAttribute("request-url");
+        System.out.println("请求获得token："+token);
+
+        //设置session
+        String requestUrl = TokenUtil.setToken(request, TokenConstants.TOKEN_USER,
+                token, TokenConstants.REQUEST_USER);
 
         if(requestUrl != null){
             response.sendRedirect(requestUrl);
         }
-        return "登录成功";
+        return "未重定向成功";
     }
 }

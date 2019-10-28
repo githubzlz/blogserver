@@ -1,7 +1,6 @@
 package com.blog.blogclient.controller;
 
 import com.blog.blogclient.feign.BlogFeignService;
-import com.blog.blogclient.token.TokenUtil;
 import com.blog.common.result.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
