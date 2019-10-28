@@ -1,8 +1,8 @@
 server:
-  port: 20010
+  port: 20020
 spring:
   application:
-    name: web-user
+    name: web-blog
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/mytestdb?serverTimezone=Asia/Shanghai
@@ -14,3 +14,4 @@ eureka:
   client:
     service-url:
       defaultZone: http://EUREKA-01:9010/eureka/
+

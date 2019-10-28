@@ -2,37 +2,37 @@ server:
   port: 10020
 
   servlet:
-    context-path: /admin
+    context-path: /blog
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 spring:
   application:
-    name: admin-server
+    name: blog-server
   datasource:
     dynamic:
       datasource:
-        mytestdb:
+        blog:
           driver-class-name: com.mysql.cj.jdbc.Driver
           url: jdbc:mysql://localhost:3306/mytestdb?serverTimezone=Asia/Shanghai
           username: root
           password:
         user:
           driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://localhost:3306/user?serverTimezone=Asia/Shanghai
+          url: jdbc:mysql://localhost:3306/blog?serverTimezone=Asia/Shanghai
           username: root
           password:
-      primary: mytestdb
+      primary: blog
 
-# http://localhost:8080/oauth/authorize?client_id=admin&response_type=code
+# http://localhost:8080/oauth/authorize?client_id=user&response_type=code
 
 security:
   oauth2:
     client:
 
-      # .propertiesÎÄ¼þclient-id´íÎó
-      client-id: admin
+# .propertiesæ–‡ä»¶client-idé”™è¯¯
+      client-id: blog
       client-secret: secret
       access-token-uri: http://localhost:8080/oauth/token
       user-authorization-uri: http://localhost:8080/oauth/authorize
@@ -40,12 +40,11 @@ security:
       user-info-uri:
       jwt:
         key-uri: http://localhost:8080/oauth/token_key
-#½«IP×¢²áµ½Eureka Server
+#å°†IPæ³¨å†Œåˆ°Eureka Server
 eureka:
   instance:
     prefer-ip-address: true
   client:
     service-url:
       defaultZone: http://EUREKA-01:9010/eureka/
-
 
