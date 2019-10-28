@@ -38,10 +38,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()  // 使用jwt，可以允许跨域
                 .authorizeRequests()
                 .antMatchers("/oauth/token").permitAll()
-                // 所有请求都要认证
                 .antMatchers("/**").authenticated()
-                .and().httpBasic(); // http_basic方式进行认证
+                // 所有请求都要认证
+                .and().httpBasic();// http_basic方式进行认证
 
+        //http.formLogin().loginPage("/auth/login");
     }
 }
 

@@ -34,8 +34,9 @@ public class UserQueryServiceImpl implements UserQueryService {
 
         if(isAdmin == null){
             pageInfo = getUserPage(pageInfo, null, null);
+        }else {
+            pageInfo = getUserPage(pageInfo,"is_admin",isAdmin);
         }
-        pageInfo = getUserPage(pageInfo,"is_admin",isAdmin);
 
         CommonUtil.outputNotNullCheck(pageInfo);
 
@@ -50,8 +51,9 @@ public class UserQueryServiceImpl implements UserQueryService {
 
         if(isAdmin != null){
             userVO = getUserInfo("id", userVO.getId(), "is_admin", isAdmin);
+        }else {
+            userVO = getUserInfo("id", userVO.getId(), null, null);
         }
-        userVO = getUserInfo("id", userVO.getId(), null, null);
 
         CommonUtil.outputNotNullCheck(userVO);
 
@@ -66,8 +68,9 @@ public class UserQueryServiceImpl implements UserQueryService {
 
         if(isAdmin != null){
             userVO = getUserInfo("username", userVO.getUsername(), "is_admin", isAdmin);
+        }else {
+            userVO = getUserInfo("username", userVO.getUsername(), null, null);
         }
-        userVO = getUserInfo("username", userVO.getUsername(), null, null);
 
         CommonUtil.outputNotNullCheck(userVO);
 

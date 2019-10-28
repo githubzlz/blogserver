@@ -1,0 +1,16 @@
+server:
+  port: 20010
+spring:
+  application:
+    name: web-user
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mytestdb?serverTimezone=Asia/Shanghai
+    username: root
+    password:
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://EUREKA-01:10010/eureka/

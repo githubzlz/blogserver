@@ -2,11 +2,13 @@ package com.blog.common.result;
 
 import com.blog.common.constants.ResultCodeConstants;
 
+import java.io.Serializable;
+
 /**
  * @author zhulinzhong
  * @version 1.0 CreateTime:2019/10/21 9:59
  */
-public class ResultSet {
+public class ResultSet<T> implements Serializable{
 
     /**
      * 返回的消息
@@ -21,14 +23,14 @@ public class ResultSet {
     /**
      * 返回的实体
      */
-    private Object entity;
+    private T entity;
 
     private ResultSet(String message, Integer code) {
         this.message = message;
         this.code = code;
     }
 
-    private ResultSet(String message, Integer code, Object entity) {
+    private ResultSet(String message, Integer code, T entity) {
         this.message = message;
         this.code = code;
         this.entity = entity;
@@ -39,8 +41,8 @@ public class ResultSet {
      * @param entity
      * @return
      */
-    public static ResultSet success(Object entity){
-        return new ResultSet(ResultCodeConstants.SUCCESS_MSG, ResultCodeConstants.SUCCESS,entity);
+    public static ResultSet<Object> success(Object entity){
+        return new ResultSet<Object>(ResultCodeConstants.SUCCESS_MSG, ResultCodeConstants.SUCCESS,entity);
     }
 
     /**
@@ -99,7 +101,7 @@ public class ResultSet {
         return entity;
     }
 
-    public void setEntity(Object entity) {
+    public void setEntity(T entity) {
         this.entity = entity;
     }
 }

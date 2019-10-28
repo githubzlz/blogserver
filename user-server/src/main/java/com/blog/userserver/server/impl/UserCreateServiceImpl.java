@@ -38,7 +38,9 @@ public class UserCreateServiceImpl implements UserCreateService {
     public ResultSet createUser(UserVO userVO) throws CreateConfException, SysExecuteException {
 
         CommonUtil.inputNotNullCheck(userVO, userVO.getUsername(),userVO.getPassword());
-
+        userVO.setId(null);
+        userVO.setIsDeleted(null);
+        userVO.setIsBanned(null);
         //通过同户名查找数据库
         UserVO result = userQueryService
                 .getUserInfo("username", userVO.getUsername(), null, null);
@@ -52,17 +54,18 @@ public class UserCreateServiceImpl implements UserCreateService {
         userVO.setLastModifiedTime(new Date());
         userVO.setPassword(password);
 
-        //创建TbUser
-        int row1 = createTbUser(userVO, password);
-
-        if(row1 != 1){
-            throw new SysExecuteException("创建失败，系统错误");
-        }
-
         int row2 = userVoMapper.insert(userVO);
         if(row2 != 1){
             throw new SysExecuteException("创建失败，系统错误");
         }
+
+        //创建TbUser
+        int row1 = createTbUser(userVO, password);
+        if(row1 != 1){
+            userVoMapper.deleteById(userVO.getId());
+            throw new SysExecuteException("创建失败，系统错误");
+        }
+
         return ResultSet.success();
     }
 

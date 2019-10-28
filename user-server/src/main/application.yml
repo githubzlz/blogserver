@@ -1,15 +1,15 @@
 server:
-  port: 10010
+  port: 10020
 
   servlet:
-    context-path: /user
+    context-path: /admin
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 spring:
   application:
-    name: user-server
+    name: admin-server
   datasource:
     dynamic:
       datasource:
@@ -23,16 +23,16 @@ spring:
           url: jdbc:mysql://localhost:3306/user?serverTimezone=Asia/Shanghai
           username: root
           password:
-      primary: user
+      primary: mytestdb
 
-# http://localhost:8080/oauth/authorize?client_id=user&response_type=code
+# http://localhost:8080/oauth/authorize?client_id=admin&response_type=code
 
 security:
   oauth2:
     client:
 
-# .propertiesæ–‡ä»¶client-idé”™è¯¯
-      client-id: user
+      # .propertiesÎÄ¼þclient-id´íÎó
+      client-id: admin
       client-secret: secret
       access-token-uri: http://localhost:8080/oauth/token
       user-authorization-uri: http://localhost:8080/oauth/authorize
@@ -40,11 +40,12 @@ security:
       user-info-uri:
       jwt:
         key-uri: http://localhost:8080/oauth/token_key
-#å°†IPæ³¨å†Œåˆ°Eureka Server
+#½«IP×¢²áµ½Eureka Server
 eureka:
   instance:
     prefer-ip-address: true
   client:
     service-url:
-      defaultZone: http://EUREKA-01:10010/eureka/
+      defaultZone: http://EUREKA-01:9010/eureka/
+
 

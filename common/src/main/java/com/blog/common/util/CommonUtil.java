@@ -16,7 +16,7 @@ public class CommonUtil {
      */
     public static void inputNotNullCheck(Object... value) throws ConfInputException{
         for(int i=0; i<value.length; i++ ){
-            if(value == null){
+            if(value[i] == null){
                 throw new ConfInputException("输入参数错误");
             }
         }
@@ -24,7 +24,7 @@ public class CommonUtil {
 
     public static void outputNotNullCheck(Object... value) throws ConfOutputException{
         for(int i=0; i<value.length; i++ ){
-         if(value == null){
+         if(value[i] == null){
                 throw new ConfOutputException("没有查询到数据");
             }
         }
