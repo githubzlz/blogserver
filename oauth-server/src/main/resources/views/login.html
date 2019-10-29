@@ -29,7 +29,6 @@
 
     }
 
-
     .btn {
         width: 350px;
         height: 35px;
@@ -53,14 +52,14 @@
 <div class="login-container">
     <div class="form-container">
         <p class="title">用户登录</p>
-        <form name="loginForm" method="post" th:action="/oauth/login">
+        <form name="loginForm" method="post" action="/oauth/form">
             <input type="text" name="username" placeholder="用户名"/>
             <br>
             <input type="password" name="password" placeholder="密码"/>
             <br>
+            <p th:style="${error==false} ? '':'display:null'" >用户名或密码错误</p>
             <button type="submit" class="btn">登 &nbsp;&nbsp; 录</button>
         </form>
-        <p style="color: red" th:if="${param.error}">用户名或密码错误</p>
     </div>
 </div>
 </body>

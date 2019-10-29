@@ -4,7 +4,14 @@ package com.blog.common.constants;
  * @author zhulinzhong
  * @version 1.0 CreateTime:2019/10/28 14:28
  */
-public class TokenConstants {
+public class ClientConstants {
+
+    /**
+     * 客户端名称
+     */
+    public static final String USER = "client_user";
+    public static final String ADMIN = "client_admin";
+    public static final String BLOG = "client_blog";
 
     /**
      * session中token的key

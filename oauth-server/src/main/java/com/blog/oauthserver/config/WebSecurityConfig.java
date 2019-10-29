@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -39,11 +40,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()  // 使用jwt，可以允许跨域
                 .authorizeRequests()
                 .antMatchers("/oauth/token").permitAll()
+                .antMatchers("/oauth/authorize").permitAll()
+                .antMatchers("/auth/login").permitAll()
+                .antMatchers("/authentication/form").permitAll()
+                .antMatchers("/oauth/form").permitAll()
                 .antMatchers("/**").authenticated()
                 // 所有请求都要认证
                 .and().httpBasic();// http_basic方式进行认证
 
-        //http.formLogin().loginPage("/auth/login");
+        http.formLogin().loginPage("/auth/login").loginProcessingUrl("/oauth/form");
     }
 }
 

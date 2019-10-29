@@ -1,0 +1,26 @@
+server:
+  port: 9000
+spring:
+  application:
+    name: token-center
+  redis:
+    host: localhost
+    port: 6379
+    password:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mytestdb?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8
+    username: root
+    password:
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://EUREKA-01:9010/eureka/
+
+#自定义配置：设置放行客户端的ip地址
+client:
+  access:
+    host: 127.0.0.1

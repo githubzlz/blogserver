@@ -1,6 +1,6 @@
 package com.blogserver.userclient.controller;
 
-import com.blog.common.constants.TokenConstants;
+import com.blog.common.constants.ClientConstants;
 import com.blog.common.result.PageInfo;
 import com.blog.common.util.TokenUtil;
 import com.blogserver.userclient.feign.UserFeignService;
@@ -29,7 +29,7 @@ public class UserController {
         PageInfo pageInfo = new PageInfo();
         pageInfo.setPageSize(10L);
         pageInfo.setPageNum(1L);
-        String token = TokenUtil.getToken(request, TokenConstants.TOKEN_USER);
+        String token = TokenUtil.getToken(request, ClientConstants.TOKEN_USER);
 
         System.out.println("正在使用token访问api："+token);
         return userFeignService.getUserList(pageInfo, token);

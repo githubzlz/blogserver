@@ -1,7 +1,9 @@
 package com.blog.blogclient.controller;
 
 import com.blog.blogclient.feign.BlogFeignService;
+import com.blog.common.constants.ClientConstants;
 import com.blog.common.result.PageInfo;
+import com.blog.common.util.TokenUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +29,7 @@ public class BlogController {
         PageInfo pageInfo = new PageInfo();
         pageInfo.setPageSize(10L);
         pageInfo.setPageNum(1L);
-        String token = TokenUtil.getToken(request).getToken();
+        String token = TokenUtil.getToken(request, ClientConstants.TOKEN_BLOG);
         return userFeignService.getTest(token);
     }
 }

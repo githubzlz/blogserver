@@ -1,5 +1,7 @@
 package com.blog.common.util;
 
+import com.blog.common.result.ClientInfo;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -64,7 +66,7 @@ public class TokenUtil {
      * @return
      * @throws IOException
      */
-    public static boolean handlerSession(HttpServletRequest request, HttpServletResponse response,
+    public static void handlerSession(HttpServletRequest request, HttpServletResponse response,
                                          String tokenName, String requestUrl) throws IOException {
 
         String token = getToken(request, tokenName);
@@ -78,10 +80,25 @@ public class TokenUtil {
             session.setAttribute(requestUrl, request.getServletPath());
 
             //重定向到 登录请求 去授权中心获取token
-            System.out.println("请求重定向到：/token/user_login");
-            response.sendRedirect("/token/user_login");
-            return false;
+            System.out.println("向token处理中心发起请求：/token/setToken");
         }
-        return true;
     }
+
+    /**
+     * 创建客户端对象
+     * @param clientId
+     * @param secret
+     * @param requestUrl
+     * @param TokenName
+     * @return
+     */
+    public static ClientInfo getClient(String clientId, String secret, String requestUrl, String TokenName){
+        ClientInfo client = new ClientInfo();
+        client.setClientId(clientId);
+        client.setSecret(secret);
+        client.setRequestUrl(requestUrl);
+        client.setTokenName(TokenName);
+        return client;
+    }
+
 }
