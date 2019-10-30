@@ -1,7 +1,5 @@
 package com.blog.oauthserver.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,11 +22,12 @@ import java.util.Map;
 public class BaseMainController {
 
     @GetMapping("/auth/login")
-    public String loginPage(Model model,Map<String, Object> map){
-        if(map.containsKey("error")){
-            model.addAttribute("error", "false");
+    public String loginPage(Model model, HttpServletRequest request){
+        if(request.getQueryString() == null){
+            model.addAttribute("error", "null");
+        }else{
+            model.addAttribute("error", "error");
         }
-        model.addAttribute("error", "true");
         return "login";
     }
 

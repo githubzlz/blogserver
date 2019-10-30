@@ -1,4 +1,4 @@
-package com.blog.ssocenter;
+package com.blog.tokencenter;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,10 +8,10 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @SpringBootApplication
 @EnableEurekaClient
 @EnableDiscoveryClient
-public class SsoCenterApplication {
+public class TokenCenterApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SsoCenterApplication.class, args);
+        SpringApplication.run(TokenCenterApplication.class, args);
     }
 
 }

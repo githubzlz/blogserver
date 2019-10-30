@@ -1,6 +1,6 @@
-package com.blog.ssocenter.config;
+package com.blog.tokencenter.config;
 
-import com.blog.ssocenter.interceptor.ClientInterceptor;
+import com.blog.tokencenter.interceptor.ClientInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;

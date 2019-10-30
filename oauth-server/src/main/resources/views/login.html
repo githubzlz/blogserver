@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <title>欢迎登陆</title>
 </head>
+<link href="/favicon-20190918085337900.ico" rel="shortcut icon" type="image/x-icon">
 <style>
     .login-container {
         margin: 50px;
-        width: 100%;
+        width: 90%;
     }
 
     .form-container {
@@ -57,7 +58,7 @@
             <br>
             <input type="password" name="password" placeholder="密码"/>
             <br>
-            <p th:style="${error==false} ? '':'display:null'" >用户名或密码错误</p>
+            <p th:hidden="${error} eq 'error' ? 'false':'hidden'" >用户名或密码错误</p>
             <button type="submit" class="btn">登 &nbsp;&nbsp; 录</button>
         </form>
     </div>

@@ -1,4 +1,4 @@
-package com.blog.ssocenter.controller;
+package com.blog.tokencenter.controller;
 
 import com.blog.common.constants.BaseConstants;
 import com.blog.common.result.ClientInfo;
@@ -13,7 +13,6 @@ import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.*;
-import sun.misc.CharacterDecoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

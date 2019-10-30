@@ -61,12 +61,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
-        System.err.println("UserName: " + user.getUsername());
-        System.err.println("Password: " + user.getPassword());
         for (TbPermission tbPermission : tbPermissions) {
             GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(tbPermission.getEnname());
             grantedAuthorities.add(grantedAuthority);
-            System.err.println("ROLE: " + tbPermission.getName());
         }
         return new User(user.getUsername(), user.getPassword(), grantedAuthorities);
     }

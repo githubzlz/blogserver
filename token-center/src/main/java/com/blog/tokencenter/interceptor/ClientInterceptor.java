@@ -1,4 +1,4 @@
-package com.blog.ssocenter.interceptor;
+package com.blog.tokencenter.interceptor;
 
 import com.blog.common.util.WebUtil;
 import org.springframework.beans.factory.annotation.Value;

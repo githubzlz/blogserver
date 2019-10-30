@@ -9,10 +9,11 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.blog</groupId>
-    <artifactId>sso-center</artifactId>
+    <artifactId>token-center</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>sso-center</name>
-    <description>Demo project for Spring Boot</description>
+    <packaging>jar</packaging>
+    <name>token-center</name>
+    <description>The token center for client</description>
 
     <properties>
         <java.version>1.8</java.version>
