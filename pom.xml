@@ -12,11 +12,17 @@
         <java.version>1.8</java.version>
     </properties>
     <modules>
-        <module>common</module>
-        <module>config-server</module>
-        <module>eureka-server</module>
-        <module>oauth-server</module>
-        <module>user-server</module>
-    </modules>
+        <module>commons/common</module>
+        <module>commons/config-server</module>
+        <module>commons/eureka-server</module>
+        <module>commons/oauth-server</module>
 
+        <module>client-blog/token-center</module>
+        <module>client-blog/blog-client</module>
+        <module>client-blog/user-client</module>
+
+        <module>server-apis/admin-server</module>
+        <module>server-apis/user-server</module>
+        <module>server-apis/blog-server</module>
+    </modules>
 </project>
