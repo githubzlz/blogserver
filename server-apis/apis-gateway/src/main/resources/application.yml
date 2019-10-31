@@ -1,0 +1,35 @@
+server:
+  port: 10000
+spring:
+  application:
+    name: APIS-GATEWAY
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+      - id: USER-SERVER
+        uri: lb://USER-SERVER
+        predicates:
+          - Path=/user/**
+
+security:
+  oauth2:
+    client:
+      # .propertiesÎÄ¼þclient-id´íÎó
+      client-id: user
+      client-secret: secret
+      access-token-uri: http://localhost:8080/oauth/token
+      user-authorization-uri: http://localhost:8080/oauth/authorize
+    resource:
+      user-info-uri:
+      jwt:
+        key-uri: http://localhost:8080/oauth/token_key
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://EUREKA-01:9010/eureka/, http://EUREKA-02:9020/eureka/

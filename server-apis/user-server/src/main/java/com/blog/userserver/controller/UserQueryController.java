@@ -20,6 +20,10 @@ public class UserQueryController {
     @Autowired
     private UserQueryService userServer;
 
+    @RequestMapping("test")
+    public String test(){
+        return "USER-SERVER";
+    }
     /**
      * 普通用户查询
      * @param pageInfo
