@@ -38,7 +38,8 @@ public class TokenController {
     private ClientInfo clientInfo;
 
     @GetMapping("/setToken/{clientId}")
-    public String codeGet(@PathVariable("clientId") String clientId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String codeGet(@PathVariable("clientId") String clientId, HttpServletRequest request,
+                          HttpServletResponse response) throws IOException {
         System.out.println("进入token处理中心，即将去获取code--------");
         HttpSession session = request.getSession();
 

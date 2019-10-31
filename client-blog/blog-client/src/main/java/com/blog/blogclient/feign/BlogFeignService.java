@@ -13,10 +13,9 @@ public interface BlogFeignService {
 
     /**
      * 请求token
-     * @param token
      * @return code
      */
     @GetMapping("/blog/test/test")
-    String getTest(@RequestHeader(name = "Authorization", required = true) String token);
+    String getTest();
 
 }

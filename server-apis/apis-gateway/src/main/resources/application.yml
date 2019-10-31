@@ -3,22 +3,13 @@ server:
 spring:
   application:
     name: APIS-GATEWAY
-  cloud:
-    gateway:
-      discovery:
-        locator:
-          enabled: true
-      routes:
-      - id: USER-SERVER
-        uri: lb://USER-SERVER
-        predicates:
-          - Path=/user/**
 
+# http://localhost:8080/oauth/authorize?client_id=apis-gateway&response_type=code
 security:
   oauth2:
     client:
       # .propertiesÎÄ¼þclient-id´íÎó
-      client-id: user
+      client-id: apis-gateway
       client-secret: secret
       access-token-uri: http://localhost:8080/oauth/token
       user-authorization-uri: http://localhost:8080/oauth/authorize
@@ -33,3 +24,14 @@ eureka:
   client:
     service-url:
       defaultZone: http://EUREKA-01:9010/eureka/, http://EUREKA-02:9020/eureka/
+zuul:
+  routes:
+    USER-SERVER:
+      path: /user/**
+      serviceId: USER-SERVER
+    ADMIN-SERVER:
+      path: /admin/**
+      serviceId: ADMIN-SERVER
+    BLOG-SERVER:
+      path: /blog/**
+      serviceId: BLOG-SERVER
