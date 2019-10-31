@@ -1,0 +1,46 @@
+server:
+  port: 10030
+
+  servlet:
+    context-path: /admin
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+spring:
+  application:
+    name: admin-server
+  datasource:
+    dynamic:
+      datasource:
+        mytestdb:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://localhost:3306/mytestdb?serverTimezone=Asia/Shanghai
+          username: root
+          password:
+      primary: mytestdb
+
+# http://localhost:8080/oauth/authorize?client_id=user&response_type=code
+
+security:
+  oauth2:
+    client:
+
+      # .properties文件client-id错误
+      client-id: admin
+      client-secret: secret
+      access-token-uri: http://localhost:8080/oauth/token
+      user-authorization-uri: http://localhost:8080/oauth/authorize
+    resource:
+      user-info-uri:
+      jwt:
+        key-uri: http://localhost:8080/oauth/token_key
+#将IP注册到Eureka Server
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://EUREKA-01:9010/eureka/, http://EUREKA-02:9020/eureka/
+
+
