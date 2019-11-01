@@ -15,7 +15,7 @@ public interface BlogFeignService {
      * 请求token
      * @return code
      */
-    @GetMapping("/blog/test/test")
+    @GetMapping("/test")
     String getTest();
 
 }

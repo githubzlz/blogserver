@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
  * @version 1.0 CreateTime:2019/10/28 9:27
  */
 @RestController
-@RequestMapping("/test")
 public class TestController {
 
     @RequestMapping("/test")

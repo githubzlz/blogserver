@@ -1,0 +1,27 @@
+server:
+  port: 20000
+spring:
+  application:
+    name: CLIENT-GATEWAY
+  redis:
+    host: localhost
+    port: 6379
+    password:
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://EUREKA-01:9010/eureka/, http://EUREKA-02:9020/eureka/
+zuul:
+  sensitiveHeaders:
+  add-host-header: true
+  routes:
+    USER-SERVER:
+      path: /blog/**
+      serviceId: WEB-BLOG
+    BLOG-SERVER:
+      path: /user/**
+      serviceId: WEB-BLOG
+    OTHER:
+      path: /**

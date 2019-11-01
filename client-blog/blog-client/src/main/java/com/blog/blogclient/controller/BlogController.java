@@ -24,12 +24,13 @@ public class BlogController {
     @Autowired
     private BlogFeignService userFeignService;
 
+    @RequestMapping("/client")
+    public String test(){
+        return "BLOG-CLIENT";
+    }
+
     @GetMapping("/test")
     public String getUserList(HttpServletRequest request, HttpServletResponse response){
-        PageInfo pageInfo = new PageInfo();
-        pageInfo.setPageSize(10L);
-        pageInfo.setPageNum(1L);
-        String token = TokenUtil.getToken(request, ClientConstants.TOKEN_BLOG);
-        return userFeignService.getTest(token);
+        return userFeignService.getTest();
     }
 }

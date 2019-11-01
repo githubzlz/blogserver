@@ -27,11 +27,8 @@ eureka:
 zuul:
   routes:
     USER-SERVER:
-      path: /user/**
+      path: /userAPI/**
       serviceId: USER-SERVER
-    ADMIN-SERVER:
-      path: /admin/**
-      serviceId: ADMIN-SERVER
     BLOG-SERVER:
-      path: /blog/**
+      path: /blogAPI/**
       serviceId: BLOG-SERVER

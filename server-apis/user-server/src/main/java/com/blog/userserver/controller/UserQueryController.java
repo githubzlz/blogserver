@@ -20,7 +20,7 @@ public class UserQueryController {
     @Autowired
     private UserQueryService userServer;
 
-    @RequestMapping("test")
+    @RequestMapping("/test")
     public String test(){
         return "USER-SERVER";
     }

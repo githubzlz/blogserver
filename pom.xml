@@ -17,12 +17,14 @@
         <module>commons/eureka-server</module>
         <module>commons/oauth-server</module>
 
-        <module>client-blog/token-center</module>
+        <module>client-blog/sso-center</module>
+        <module>client-blog/client-gateway</module>
+        <module>client-blog/admin-client</module>
         <module>client-blog/blog-client</module>
         <module>client-blog/user-client</module>
 
-        <module>server-apis/admin-server</module>
         <module>server-apis/user-server</module>
         <module>server-apis/blog-server</module>
+        <module>server-apis/apis-gateway</module>
     </modules>
 </project>

@@ -12,6 +12,21 @@ spring:
     host: localhost
     port: 6379
     password:
+
+# http://localhost:8080/oauth/authorize?client_id=blog-client&response_type=code
+security:
+  oauth2:
+    client:
+      # .properties文件client-id错误
+      client-id: blog_client
+      client-secret: secret
+      access-token-uri: http://localhost:8080/oauth/token
+      user-authorization-uri: http://localhost:8080/oauth/authorize
+    resource:
+      user-info-uri:
+      jwt:
+        key-uri: http://localhost:8080/oauth/token_key
+
 eureka:
   instance:
     prefer-ip-address: true
