@@ -41,8 +41,8 @@ public class ResultSet<T> implements Serializable{
      * @param entity
      * @return
      */
-    public static ResultSet<Object> success(Object entity){
-        return new ResultSet<Object>(ResultCodeConstants.SUCCESS_MSG, ResultCodeConstants.SUCCESS,entity);
+    public static ResultSet success(Object entity){
+        return new ResultSet<>(ResultCodeConstants.SUCCESS_MSG, ResultCodeConstants.SUCCESS,entity);
     }
 
     /**

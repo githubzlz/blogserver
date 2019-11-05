@@ -25,6 +25,11 @@ public class UserVO extends BaseEntity{
     private String password;
 
     /**
+     * 用户昵称
+     */
+    private String nickname;
+
+    /**
      * 性别
      */
     private Integer gender;
@@ -63,6 +68,14 @@ public class UserVO extends BaseEntity{
      * 是否是管理员
      */
     private Integer isAdmin;
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
 
     public Long getId() {
         return id;

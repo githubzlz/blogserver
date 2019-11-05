@@ -2,6 +2,7 @@ package com.blog.ssocenter.controller;
 
 import com.blog.common.constants.BaseConstants;
 import com.blog.common.constants.ClientConstants;
+import com.blog.common.util.LoginUserUtil;
 import com.blog.common.util.TokenUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpEntity;
@@ -75,6 +76,7 @@ public class LoginHandleController {
             session.setMaxInactiveInterval(3600);
             session.setAttribute(ClientConstants.BLOG, URLEncoder.encode(token, "utf-8"));
             session.setAttribute("is_login", "true");
+            session.setAttribute("login_user", LoginUserUtil.getLoginUser(token));
         }
         if(url != null){
             response.sendRedirect("http://www.blogzlz.com:20000" + url);

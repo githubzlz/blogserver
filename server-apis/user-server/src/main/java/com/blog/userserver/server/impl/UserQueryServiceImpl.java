@@ -8,7 +8,7 @@ import com.blog.common.exception.ConfInputException;
 import com.blog.common.exception.ConfOutputException;
 import com.blog.common.result.PageInfo;
 import com.blog.common.result.ResultSet;
-import com.blog.common.util.CommonUtil;
+import com.blog.common.util.ConfCheckUtil;
 import com.blog.common.util.PageUtil;
 import com.blog.userserver.mapper.UserVoMapper;
 import com.blog.userserver.server.UserQueryService;
@@ -30,7 +30,7 @@ public class UserQueryServiceImpl implements UserQueryService {
     public ResultSet getUserPage(PageInfo<UserVO> pageInfo,Integer isAdmin)
             throws ConfInputException, ConfOutputException {
 
-        CommonUtil.inputNotNullCheck(pageInfo,pageInfo.getPageNum(),pageInfo.getPageSize());
+        ConfCheckUtil.inputNotNullCheck(pageInfo,pageInfo.getPageNum(),pageInfo.getPageSize());
 
         if(isAdmin == null){
             pageInfo = getUserPage(pageInfo, null, null);
@@ -38,7 +38,7 @@ public class UserQueryServiceImpl implements UserQueryService {
             pageInfo = getUserPage(pageInfo,"is_admin",isAdmin);
         }
 
-        CommonUtil.outputNotNullCheck(pageInfo);
+        ConfCheckUtil.outputNotNullCheck(pageInfo);
 
         return ResultSet.success(pageInfo);
     }
@@ -47,7 +47,7 @@ public class UserQueryServiceImpl implements UserQueryService {
     public ResultSet getUserById(UserVO userVO,Integer isAdmin)
             throws ConfInputException, ConfOutputException {
 
-        CommonUtil.inputNotNullCheck(userVO, userVO.getId());
+        ConfCheckUtil.inputNotNullCheck(userVO, userVO.getId());
 
         if(isAdmin != null){
             userVO = getUserInfo("id", userVO.getId(), "is_admin", isAdmin);
@@ -55,7 +55,7 @@ public class UserQueryServiceImpl implements UserQueryService {
             userVO = getUserInfo("id", userVO.getId(), null, null);
         }
 
-        CommonUtil.outputNotNullCheck(userVO);
+        ConfCheckUtil.outputNotNullCheck(userVO);
 
         return ResultSet.success(userVO);
     }
@@ -64,7 +64,7 @@ public class UserQueryServiceImpl implements UserQueryService {
     public ResultSet getUserByUserName(UserVO userVO,Integer isAdmin)
             throws ConfInputException, ConfOutputException {
 
-        CommonUtil.inputNotNullCheck(userVO, userVO.getUsername());
+        ConfCheckUtil.inputNotNullCheck(userVO, userVO.getUsername());
 
         if(isAdmin != null){
             userVO = getUserInfo("username", userVO.getUsername(), "is_admin", isAdmin);
@@ -72,7 +72,7 @@ public class UserQueryServiceImpl implements UserQueryService {
             userVO = getUserInfo("username", userVO.getUsername(), null, null);
         }
 
-        CommonUtil.outputNotNullCheck(userVO);
+        ConfCheckUtil.outputNotNullCheck(userVO);
 
         return ResultSet.success(userVO);
     }

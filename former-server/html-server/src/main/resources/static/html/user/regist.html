@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎注册</title>
+</head>
+<style>
+    body{
+        text-align: center;
+    }
+    .from-div{
+        margin: 5% auto;
+        width: 50%;
+        box-shadow: 1px 1px 10px coral;
+        border-radius: 10px;
+        padding: 30px;
+        height: 380px;
+    }
+
+    .text1{
+        margin-left: 50px;
+        height: 250px;
+        display: inline-block;
+        font-size: 18px;
+        text-align: right;
+    }
+    p{
+        margin-top: 10px;
+    }
+    .text-input{
+        text-align: left;
+        width: 60%;
+        margin-top: 10px;
+        height: 250px;
+        display: inline-block;
+        margin-left: 20px;
+    }
+
+    input{
+        margin-top: 10px;
+        border-radius: 5px;
+        width: 70%;
+        height: 27px;
+        margin-right: 0px;
+    }
+</style>
+<header>
+</header>
+<body>
+    <div class="from-div">
+        <h1 style="color: #7a751b">请输入您的信息</h1>
+        <form action="http://www.blogzlz.com:20010/new/user" method="post">
+            <label class="text1">
+                <p>用户名：</p>
+                <p>密码：</p>
+                <p>确认密码：</p>
+                <p>昵称：</p>
+                <p>手机号：</p>
+            </label>
+            <label class="text-input">
+                <input type="text" placeholder="请输入用户名：" name="username"><br>
+                <input type="password" placeholder="请输入密码：" name="password"><br>
+                <input type="password" placeholder="请再次输入密码：" name=""><br>
+                <input type="text" placeholder="请输入昵称：" name="nickname"><br>
+                <input type="text" placeholder="请输入手机号：" name="phone"><br>
+            </label>
+            <input style="display: block; margin: 5px auto; width: 20%;color: darkcyan;font-size: 16px" type="submit">
+        </form>
+    </div>
+</body>
+<footer>
+
+</footer>
+</html>

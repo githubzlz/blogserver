@@ -4,10 +4,19 @@ spring:
   application:
     name: web-user
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/mytestdb?serverTimezone=Asia/Shanghai
-    username: root
-    password:
+    dynamic:
+      datasource:
+        mytestdb:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://localhost:3306/mytestdb?serverTimezone=Asia/Shanghai
+          username: root
+          password:
+        user:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://localhost:3306/user?serverTimezone=Asia/Shanghai
+          username: root
+          password:
+      primary: user
   redis:
     host: localhost
     port: 6379

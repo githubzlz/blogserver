@@ -13,12 +13,4 @@ import org.springframework.web.bind.annotation.RequestHeader;
 @FeignClient(name = "user-server")
 public interface UserFeignService {
 
-    /**
-     * 请求token
-     * @param pageInfo
-     * @return code
-     */
-    @GetMapping("/query/all_user_page")
-    String getUserList(@RequestBody PageInfo pageInfo);
-
 }
